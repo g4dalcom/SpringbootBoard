@@ -2,7 +2,7 @@
 
 **2022-08-15 ~ 08. 18. (진행중)**
 
-[1. 개발일지(노션)](https://www.notion.so/1c551f6a8e5e423bb336c051547be197?v=dcc7831a1302448b974c1e32f14edf0d)
+[1. 개발일지(노션)](https://rhetorical-durian-6e6.notion.site/1c551f6a8e5e423bb336c051547be197?v=dcc7831a1302448b974c1e32f14edf0d)
 
 ---
 
