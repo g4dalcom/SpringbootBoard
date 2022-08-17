@@ -1,0 +1,99 @@
+.wrapper {
+    width: 1000px;
+    margin: 10px auto;
+}
+
+.wrapper-add {
+    width: 800px;
+    margin: 150px auto;
+}
+
+#maintitle {
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+#main-bar {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+    padding-bottom: 5px;
+}
+
+
+.table-striped {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.boards-num {
+    width: 50px;
+}
+
+.boards-title {
+    width: 600px;
+    text-align: center;
+}
+
+.boards-writer {
+    width: 150px;
+    text-align: left;
+}
+
+.boards-createdate {
+    text-align: center;
+}
+
+.boards-tableTbody {
+    font-size: 14px;
+}
+
+.write-btn {
+    margin-right: 230px;
+}
+
+.pagination {
+    dispaly: flex;
+    justify-content: center;
+}
+
+.pagination li {
+    display: inline;
+}
+
+.pagination a {
+    display: inline-block;
+}
+
+.one-board {
+    width: 700px;
+    margin: auto;
+}
+
+.board-table {
+    border: 1px solid black;
+}
+
+#writebtn {
+    margin-left: 15px;
+    position: relative;
+    left: 650px;
+}
+
+#update-board {
+    margin-top: 30px;
+}
+
+
+#card-body {
+    padding: 0 0 1rem;
+}
+
+#one-board-btn {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.icon_write {
+    margin: 0 auto;
+}
