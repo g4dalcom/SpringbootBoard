@@ -105,16 +105,6 @@ function showBoard(id) {
 }
 
 function addBoardHtml(board) {
-    // return `<tr>
-    //           <th>${board.title}</th>
-    //        </tr>
-    //         <tr>
-    //           <th>${board.writer}</th>
-    //        </tr>
-    //         <tr>
-    //           <th>${board.contents}</th>
-    //        </tr>`
-
         return `<div id="pre-update-board">
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">제목</label>
@@ -132,7 +122,7 @@ function addBoardHtml(board) {
                 <div class="mb-3 row">
                     <label class="col-sm-2 col-form-label">비밀번호</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="pre-update-password">
+                        <input type="text" class="form-control" id="pre-update-password" placeholder="글을 삭제하려면 이전에 입력한 비밀번호를 입력해주세요!">
                     </div>
                 </div>
                 <div class="mb-3">
@@ -143,8 +133,7 @@ function addBoardHtml(board) {
                     <button type="button" class="btn btn-primary" onclick="deleteBoard()">삭제</button>
                     <button type="button" class="btn btn-primary" onclick="showAllBoard(0)">목록</button>
                 </div>
-            </div>
-`
+            </div>`
 }
 
 function boardWrite() {
@@ -207,19 +196,32 @@ function updateBoard() {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function (response) {
-            alert('수정 완료');
-            window.location.href = '/'
+            if(response == 0) {
+                alert('비밀번호가 일치하지 않습니다');
+            } else {
+                alert('수정 완료');
+                window.location.href = '/'
+            }
         }
     })
 }
 
 function deleteBoard(id) {
+    let password = $('#pre-update-password').val().trim();
+    let data = {'password' : password};
+
     $.ajax({
         type: "DELETE",
         url: '/api/board/' + temp,        // controller 로 보내고자 하는 url
+        contentType: "application/json",
+        data: JSON.stringify(data),
         success: function (response) {
-            alert('삭제 완료');
-            window.location.href = '/'
+            if(response == 0) {
+                alert('비밀번호가 일치하지 않습니다.');
+            } else {
+                alert('삭제 완료');
+                window.location.href = '/'
+            }
         }
     })
 }

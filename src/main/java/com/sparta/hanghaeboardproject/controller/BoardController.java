@@ -3,7 +3,6 @@ package com.sparta.hanghaeboardproject.controller;
 import com.sparta.hanghaeboardproject.domain.Board;
 import com.sparta.hanghaeboardproject.domain.BoardDto;
 import com.sparta.hanghaeboardproject.domain.BoardRepository;
-import com.sparta.hanghaeboardproject.domain.PasswordDto;
 import com.sparta.hanghaeboardproject.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,22 +40,38 @@ public class BoardController {
         return boardRepository.save(board);
     }
 
+
+
     //  게시글 수정
     @PutMapping("/api/board/{id}")
     public Long updateBoard(@PathVariable Long id, @RequestBody BoardDto boardDto) {
-        return boardService.update(id, boardDto);
+        Optional<Board> board = boardRepository.findById(id);
+        if(board.isPresent()) {
+            System.out.println("board.get().getPassword() : " + board.get().getPassword() + "boardDto.getPassword() : " + boardDto.getPassword());
+            if(board.get().getPassword().equals(boardDto.getPassword())) {
+                return boardService.update(id, boardDto);
+            } else {
+                System.out.println("비밀번호 틀림.");
+                return 0L;
+            }
+        }
+        return id;
     }
+
 
     //  게시글 삭제
     @DeleteMapping("/api/board/{id}")
-    public void deleteBoard(@PathVariable Long id) {
-        boardRepository.deleteById(id);
+    public Long deleteBoard(@PathVariable Long id, @RequestBody BoardDto boardDto) {
+        Optional<Board> board = boardRepository.findById(id);
+        if(board.isPresent()) {
+            System.out.println("board.get().getPassword() : " + board.get().getPassword() + "boardDto.getPassword() : " + boardDto.getPassword());
+            if(board.get().getPassword().equals(boardDto.getPassword())) {
+                boardRepository.deleteById(id);
+            } else {
+                System.out.println("비밀번호 틀림.");
+                return 0L;
+            }
+        }
+        return id;
     }
-
-    //게시글 비밀번호 확인
-//    @PostMapping("/api/posts/{id}")
-//    public Long checkPassword(@PathVariable Long id, @RequestBody PasswordDto passwordDto ) {
-//        boardService.checkPw(id, passwordDto);
-//        return id;
-//    }
 }

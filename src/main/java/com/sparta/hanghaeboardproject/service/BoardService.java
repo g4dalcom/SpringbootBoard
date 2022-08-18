@@ -1,9 +1,6 @@
 package com.sparta.hanghaeboardproject.service;
 
-import com.sparta.hanghaeboardproject.domain.Board;
-import com.sparta.hanghaeboardproject.domain.BoardDto;
-import com.sparta.hanghaeboardproject.domain.BoardRepository;
-import com.sparta.hanghaeboardproject.domain.PasswordDto;
+import com.sparta.hanghaeboardproject.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -25,21 +22,4 @@ public class BoardService {
         board.update(boardDto);
         return board.getId();
     }
-
-    //비밀번호 일치 확인
-//    @Transactional
-//    public void checkPw(Long id, PasswordDto passwordDto) {
-//        Optional<Board> optional = BoardRepository.findById(id);
-//        Board board = optional.get();
-//        String realPassword = board.getPassword();
-//
-//        if(passwordDto.getPassword().equals(realPassword)){
-//            System.out.println("Success");
-//        }else{
-//            System.out.println("failed");
-//            System.out.println(realPassword);
-//            System.out.println(passwordDto.getPassword());
-//        }
-//    }
-
 }

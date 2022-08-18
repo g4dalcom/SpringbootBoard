@@ -74,6 +74,10 @@
     border: 1px solid black;
 }
 
+.col-form-label {
+    padding-right: 5px;
+}
+
 #writebtn {
     margin-left: 15px;
     position: relative;
