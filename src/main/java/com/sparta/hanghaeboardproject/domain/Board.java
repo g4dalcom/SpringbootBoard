@@ -1,53 +1,56 @@
 package com.sparta.hanghaeboardproject.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sparta.hanghaeboardproject.dto.BoardDto;
+import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-@Getter
 @Entity
+@Getter @Setter @EqualsAndHashCode(of = "id")
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-public class Board extends Timestamped {
+@EntityListeners(AuditingEntityListener.class)
+public class Board {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
+    @Id @GeneratedValue
     private Long id;
 
     @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
-    private String writer;
-
-    @Column(nullable = false)
     private String contents;
 
-    @Column(nullable = false)
-    private String password;
+    @ManyToOne
+    // @JoinColumn(name = "account_id")
+    private Account account;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Builder.Default
+    private Set<Comment> comments = new HashSet<>();
 
-    //  기본 생성자
-    public Board(String title, String writer, String contents, String password) {
-        this.title = title;
-        this.writer = writer;
-        this.contents = contents;
-        this.password = password;
+    public void updateBoard(BoardDto boardRequestDto) {
+        this.title = boardRequestDto.getTitle();
+        this.contents = boardRequestDto.getContents();
     }
 
-    //  게시글 작성시 이용할 DTO
-    public Board(BoardDto boardDto) {
-        this.title = boardDto.getTitle();
-        this.writer = boardDto.getWriter();
-        this.contents = boardDto.getContents();
-        this.password = boardDto.getPassword();
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setBoard(this);
     }
 
-    //  게시글 수정시 이용할 DTO
-    public void update(BoardDto boardDto) {
-        this.title = boardDto.getTitle();
-        this.writer = boardDto.getWriter();
-        this.contents = boardDto.getContents();
-        this.password = boardDto.getPassword();
+    public void deleteComment(Comment deleteComment) {
+        this.comments.remove(deleteComment);
+        deleteComment.setBoard(null);
     }
 
+    public void deleteComments(List<Comment> commentList) {
+        this.comments.removeAll(commentList);
+    }
 }
