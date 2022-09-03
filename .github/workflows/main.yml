@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  S3_BUCKET_NAME: board-deploy
+  S3_BUCKET_NAME: postblog-bucket
 
 jobs:
   build:
